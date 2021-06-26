@@ -7,12 +7,12 @@ import HomeNavigator from './HomeNavigator';
 
 function AppNavContainer() {
   const {
-    authState: {isLoggedIn},
+    state: {authState},
   } = useContext(GlobalContext);
-  console.log({isLoggedIn});
+  console.log({authState});
   return (
     <NavigationContainer>
-      {isLoggedIn ? <DrawNavigator /> : <HomeNavigator />}
+      {authState.isLoggedIn ? <DrawNavigator /> : <HomeNavigator />}
     </NavigationContainer>
   );
 }
