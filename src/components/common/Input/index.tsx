@@ -1,6 +1,7 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {ReactNode} from 'react';
-import {Text, TextInputComponent, TextStyle, View} from 'react-native';
+import {Text, TextInputProps, TextStyle, View} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 import colors from '../../../assets/theme/colors';
 import styles from './styles';
@@ -13,8 +14,7 @@ type InputProps = {
   icon?: string | ReactNode;
   iconPosition?: 'right' | 'left';
   error?: string;
-  props?: typeof TextInput;
-};
+} & TextInputProps;
 
 const Input = ({
   onChangeText,
@@ -24,20 +24,26 @@ const Input = ({
   icon,
   iconPosition,
   error,
-  props,
+  ...rest
 }: InputProps) => {
   const [focused, setFocused] = useState(false);
-  const getFlexDirection = ({
-    iconPosition,
-  }: Pick<InputProps, 'iconPosition'>) => {
-    if (icon && iconPosition === 'left') return 'row';
-    if (icon && iconPosition === 'right') return 'row-reverse';
+  const getFlexDirection = (iconPosition: InputProps['iconPosition']) => {
+    if (icon && iconPosition === 'left') {
+      return 'row';
+    }
+    if (icon && iconPosition === 'right') {
+      return 'row-reverse';
+    }
     return undefined;
   };
 
-  const getBorderColor = ({error}: Pick<InputProps, 'error'>) => {
-    if (focused) return colors.primary;
-    if (error) return colors.danger;
+  const getBorderColor = (error: InputProps['error']) => {
+    if (focused) {
+      return colors.primary;
+    }
+    if (error) {
+      return colors.danger;
+    }
     return colors.grey;
   };
   return (
@@ -48,17 +54,13 @@ const Input = ({
           styles.wrapper,
           {
             alignItems: icon ? 'center' : 'baseline',
-            flexDirection: getFlexDirection({
-              iconPosition,
-            }),
-            borderColor: getBorderColor({
-              error,
-            }),
+            flexDirection: getFlexDirection(iconPosition),
+            borderColor: getBorderColor(error),
           },
         ]}>
         <View>{icon && iconPosition === 'right' && icon}</View>
         <TextInput
-          {...props}
+          {...rest}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           style={[styles.textInput, style]}
