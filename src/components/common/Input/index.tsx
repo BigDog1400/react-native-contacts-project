@@ -38,11 +38,11 @@ const Input = ({
   };
 
   const getBorderColor = (error: InputProps['error']) => {
-    if (focused) {
-      return colors.primary;
-    }
     if (error) {
       return colors.danger;
+    }
+    if (focused) {
+      return colors.primary;
     }
     return colors.grey;
   };
