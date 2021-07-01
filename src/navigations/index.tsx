@@ -1,6 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useContext} from 'react';
 import {GlobalContext} from '../context/Provider';
+import {AuthNavigator} from './AuthNavigator';
 // import {AuthNavigator} from './AuthNavigator';
 import {DrawNavigator} from './DrawNavigator';
 import HomeNavigator from './HomeNavigator';
@@ -12,7 +13,7 @@ function AppNavContainer() {
   console.log({authState});
   return (
     <NavigationContainer>
-      {authState.isLoggedIn ? <DrawNavigator /> : <HomeNavigator />}
+      {authState.isLoggedIn ? <DrawNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }
