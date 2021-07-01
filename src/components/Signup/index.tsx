@@ -6,6 +6,7 @@ import {Container} from '../../components/common/Container';
 import {CustomButton} from '../../components/common/CustomButton';
 import {Input} from '../../components/common/Input';
 import {LOGIN} from '../../constants/routeNames';
+import {authType} from '../../context/initialStates/authState';
 import {userSignUpFormValues} from '../../types/userSignUpFormValues';
 import styles from './styles';
 
@@ -14,13 +15,15 @@ type RegisterComponentProps = {
   form: userSignUpFormValues;
   errors: userSignUpFormValues;
   onChange: ({name, value}: {name: string; value: string}) => void;
-};
+} & Pick<authType, 'error' | 'loading'>;
 
 const RegisterComponent = ({
   onSubmit,
   form,
   errors,
   onChange,
+  loading,
+  error,
 }: RegisterComponentProps) => {
   const {navigate} = useNavigation();
   return (
@@ -33,14 +36,16 @@ const RegisterComponent = ({
         <Text style={styles.title}>Welcome to RNContacts</Text>
         <Text style={styles.subTitle}>Create a Free Account</Text>
         <View style={styles.form}>
+          {error?.error && <Text>{error?.error}</Text>}
+          {error && <Text>{JSON.stringify(error)}</Text>}
           <Input
             label="Username"
-            value={form.userName}
+            value={form.username}
             onChangeText={value => {
-              onChange({name: 'userName', value});
+              onChange({name: 'username', value});
             }}
             placeholder="Enter Username"
-            error={errors.userName}
+            error={errors.username}
           />
           <Input
             label="First Name"
@@ -83,7 +88,13 @@ const RegisterComponent = ({
             placeholder="Enter Password"
             error={errors.password}
           />
-          <CustomButton onPress={onSubmit} loading primary title="Submit" />
+          <CustomButton
+            onPress={onSubmit}
+            loading={loading}
+            disabled={loading}
+            primary
+            title="Submit"
+          />
         </View>
         <View style={styles.createSection}>
           <Text style={styles.infoText}>Already have an Account?</Text>
