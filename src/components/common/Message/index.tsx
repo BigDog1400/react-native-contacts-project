@@ -1,11 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  GestureResponderEvent,
-  View,
-} from 'react-native';
+import {TouchableOpacity, Text, View} from 'react-native';
 import colors from '../../../assets/theme/colors';
 import styles from './styles';
 type MessageProps = {
@@ -14,8 +9,8 @@ type MessageProps = {
   primary?: boolean;
   secondary?: boolean;
   info?: boolean;
-  retry: boolean;
-  retryFn: () => void;
+  retry?: boolean;
+  retryFn?: () => void;
   danger?: boolean;
   success?: boolean;
   onDismiss: () => void;
@@ -32,6 +27,7 @@ const Message = ({
   retryFn,
 }: MessageProps) => {
   const [userDismissed, setUserDismissed] = useState(false);
+
   const getBgColor = () => {
     if (primary) {
       return colors.primary;
