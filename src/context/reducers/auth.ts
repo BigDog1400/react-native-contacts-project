@@ -7,6 +7,9 @@ export enum Types {
   REGISTER_LOADING = 'REGISTER_LOADING',
   REGISTER_SUCCESS = 'REGISTER_SUCCESS',
   REGISTER_FAIL = 'REGISTER_FAIL',
+  LOGIN_LOADING = 'LOGIN_LOADING',
+  LOGIN_SUCCESS = 'LOGIN_SUCCESS',
+  LOGIN_FAIL = 'LOGIN_FAIL',
   CLEAR_AUTH_STATE = 'CLEAR_AUTH_STATE',
 }
 
@@ -15,10 +18,13 @@ type AuthPayload = {
     email: string;
     password: string;
   };
-  [Types.REGISTER_LOADING]: undefined;
   [Types.CLEAR_AUTH_STATE]: undefined;
+  [Types.REGISTER_LOADING]: undefined;
   [Types.REGISTER_SUCCESS]: object;
   [Types.REGISTER_FAIL]: object;
+  [Types.LOGIN_LOADING]: undefined;
+  [Types.LOGIN_SUCCESS]: object;
+  [Types.LOGIN_FAIL]: object;
   [Types.SIGN_OUT]: {};
 };
 
@@ -33,6 +39,12 @@ const auth = (state: authType, action: AuthActions) => {
     case Types.REGISTER_SUCCESS:
       return {...state, loading: false, data: action.payload};
     case Types.REGISTER_FAIL:
+      return {...state, loading: false, error: action.payload};
+    case Types.LOGIN_LOADING:
+      return {...state, loading: true};
+    case Types.LOGIN_SUCCESS:
+      return {...state, loading: false, data: action.payload, isLoggedIn: true};
+    case Types.LOGIN_FAIL:
       return {...state, loading: false, error: action.payload};
     case Types.CLEAR_AUTH_STATE:
       return {...state, loading: false, data: null, error: null};
