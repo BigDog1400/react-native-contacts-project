@@ -6,9 +6,28 @@ import {Container} from '../../components/common/Container';
 import {CustomButton} from '../../components/common/CustomButton';
 import {Input} from '../../components/common/Input';
 import {REGISTER} from '../../constants/routeNames';
+import {authType} from '../../context/initialStates/authState';
+import {userSignInFormValues} from '../../types/userSignInFormValues';
+import {Message} from '../common/Message';
 import styles from './styles';
-const LoginComponent = () => {
-  const [text, onChangeText] = useState('Useless Text');
+
+type LoginComponentProps = {
+  onSubmit: () => void;
+  form: userSignInFormValues;
+  errors: userSignInFormValues;
+  onChange: ({name, value}: {name: string; value: string}) => void;
+  onDismiss: () => void;
+} & Pick<authType, 'error' | 'loading'>;
+
+const LoginComponent = ({
+  onSubmit,
+  form,
+  errors,
+  onChange,
+  loading,
+  error,
+  onDismiss,
+}: LoginComponentProps) => {
   const {navigate} = useNavigation();
   return (
     <Container>
@@ -19,28 +38,41 @@ const LoginComponent = () => {
       <View>
         <Text style={styles.title}>Welcome to RNContacts</Text>
         <Text style={styles.subTitle}>Please login here</Text>
+        {error?.error && (
+          <Message onDismiss={onDismiss} message={error?.error} />
+        )}
+        {error && (
+          <Message
+            onDismiss={onDismiss}
+            danger
+            message={JSON.stringify(error)}
+          />
+        )}
         <View style={styles.form}>
           <Input
             label="Username"
-            value={text}
-            onChangeText={text => onChangeText(text)}
+            value={form.username}
+            onChangeText={value => {
+              onChange({name: 'username', value});
+            }}
             placeholder="Enter Username"
-            // error="This field is required"
           />
 
           <Input
             label="Password"
-            value={text}
-            onChangeText={text => onChangeText(text)}
+            value={form.password}
+            onChangeText={value => {
+              onChange({name: 'password', value});
+            }}
             icon={<Text>Show</Text>}
             iconPosition="right"
             secureTextEntry
             placeholder="Enter Password"
-            error="This field is required"
           />
           <CustomButton
-            onPress={e => console.log(e)}
-            loading
+            disabled={loading}
+            onPress={onSubmit}
+            loading={loading}
             primary
             title="Submit"
           />
