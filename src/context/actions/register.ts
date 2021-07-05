@@ -30,8 +30,8 @@ export default ({
       })
       .then(res => {
         dispatch({
-          type: Types.REGISTER_LOADING,
-          //   payload: res.data,
+          type: Types.REGISTER_SUCCESS,
+          payload: res.data,
         });
       })
       .catch(err => {
