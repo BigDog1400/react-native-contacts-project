@@ -8,6 +8,7 @@ import {Input} from '../../components/common/Input';
 import {LOGIN} from '../../constants/routeNames';
 import {authType} from '../../context/initialStates/authState';
 import {userSignUpFormValues} from '../../types/userSignUpFormValues';
+import {Message} from '../common/Message';
 import styles from './styles';
 
 type RegisterComponentProps = {
@@ -36,8 +37,29 @@ const RegisterComponent = ({
         <Text style={styles.title}>Welcome to RNContacts</Text>
         <Text style={styles.subTitle}>Create a Free Account</Text>
         <View style={styles.form}>
-          {error?.error && <Text>{error?.error}</Text>}
-          {error && <Text>{JSON.stringify(error)}</Text>}
+          {error?.error && (
+            <Message
+              onDismiss={() => {}}
+              retry
+              retryFn={() => {
+                console.log('hello world');
+              }}
+              success
+              message={error?.error}
+            />
+          )}
+          {error && (
+            <Message
+              onDismiss={() => {}}
+              retry
+              danger
+              retryFn={() => {
+                console.log('hello world');
+              }}
+              success
+              message={JSON.stringify(error)}
+            />
+          )}
           <Input
             label="Username"
             value={form.username}
