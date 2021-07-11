@@ -26,7 +26,7 @@ function AppNavContainer() {
   };
   useEffect(() => {
     getUser();
-  }, []);
+  }, [authState.isLoggedIn]);
 
   return (
     <>

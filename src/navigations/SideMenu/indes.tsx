@@ -1,13 +1,21 @@
 /* eslint-disable react-native/no-inline-styles */
 import {DrawerNavigationHelpers} from '@react-navigation/drawer/lib/typescript/src/types';
 import React from 'react';
+import {Dispatch} from 'react';
 import {View, Alert, Text, Image, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Container} from '../../components/common/Container';
 import {SETTINGS} from '../../constants/routeNames';
+import logoutUser from '../../context/actions/logoutUser';
 import styles from './styles';
 
-const SideMenu = ({navigation}: {navigation: DrawerNavigationHelpers}) => {
+const SideMenu = ({
+  navigation,
+  dispatch,
+}: {
+  navigation: DrawerNavigationHelpers;
+  dispatch: React.Dispatch<any>;
+}) => {
   const handleLogout = () => {
     navigation.toggleDrawer();
     Alert.alert('Logout!', 'Are you shure?', [
@@ -17,7 +25,9 @@ const SideMenu = ({navigation}: {navigation: DrawerNavigationHelpers}) => {
       },
       {
         text: 'Ok',
-        onPress: () => {},
+        onPress: () => {
+          logoutUser()(dispatch);
+        },
       },
     ]);
   };

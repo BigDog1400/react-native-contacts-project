@@ -11,6 +11,7 @@ export enum Types {
   LOGIN_SUCCESS = 'LOGIN_SUCCESS',
   LOGIN_FAIL = 'LOGIN_FAIL',
   CLEAR_AUTH_STATE = 'CLEAR_AUTH_STATE',
+  LOGOUT_USER = 'LOGOUT_USER',
 }
 
 type AuthPayload = {
@@ -26,6 +27,7 @@ type AuthPayload = {
   [Types.LOGIN_SUCCESS]: object;
   [Types.LOGIN_FAIL]: object;
   [Types.SIGN_OUT]: {};
+  [Types.LOGOUT_USER]: undefined;
 };
 
 export type AuthActions = ActionMap<AuthPayload>[keyof ActionMap<AuthPayload>];
@@ -48,6 +50,8 @@ const auth = (state: authType, action: AuthActions) => {
       return {...state, loading: false, error: action.payload};
     case Types.CLEAR_AUTH_STATE:
       return {...state, loading: false, data: null, error: null};
+    case Types.LOGOUT_USER:
+      return {...state, loading: false, data: null, isLoggedIn: false};
     default:
       return state;
   }
