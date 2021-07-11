@@ -1,14 +1,26 @@
 /* eslint-disable react-native/no-inline-styles */
 import {DrawerNavigationHelpers} from '@react-navigation/drawer/lib/typescript/src/types';
-import {DrawerActions} from '@react-navigation/routers';
 import React from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Alert, Text, Image, TouchableOpacity} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Container} from '../../components/common/Container';
 import {SETTINGS} from '../../constants/routeNames';
 import styles from './styles';
 
 const SideMenu = ({navigation}: {navigation: DrawerNavigationHelpers}) => {
+  const handleLogout = () => {
+    navigation.toggleDrawer();
+    Alert.alert('Logout!', 'Are you shure?', [
+      {
+        text: 'Cancel',
+        onPress: () => {},
+      },
+      {
+        text: 'Ok',
+        onPress: () => {},
+      },
+    ]);
+  };
   const menuItems = [
     {
       icon: <Text>T</Text>,
@@ -20,7 +32,7 @@ const SideMenu = ({navigation}: {navigation: DrawerNavigationHelpers}) => {
     {
       icon: <Text>T</Text>,
       name: 'Logout',
-      onPress: () => {},
+      onPress: handleLogout,
     },
   ];
   return (
