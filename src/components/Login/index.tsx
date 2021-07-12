@@ -29,6 +29,7 @@ const LoginComponent = ({
   onDismiss,
 }: LoginComponentProps) => {
   const {navigate} = useNavigation();
+  const [isSecureEntry, setIsSecureEntry] = useState(true);
   return (
     <Container>
       <Image
@@ -64,9 +65,13 @@ const LoginComponent = ({
             onChangeText={value => {
               onChange({name: 'password', value});
             }}
-            icon={<Text>Show</Text>}
+            icon={
+              <TouchableOpacity onPress={() => setIsSecureEntry(prev => !prev)}>
+                <Text>{isSecureEntry ? 'Show' : 'Hide'}</Text>
+              </TouchableOpacity>
+            }
             iconPosition="right"
-            secureTextEntry
+            secureTextEntry={isSecureEntry}
             placeholder="Enter Password"
           />
           <CustomButton
