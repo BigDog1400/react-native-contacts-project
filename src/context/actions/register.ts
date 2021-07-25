@@ -16,7 +16,8 @@ export default ({
     password,
     username,
   }: userSignUpFormValues) =>
-  (dispatch: Dispatch<AuthActions>) => {
+  (dispatch: Dispatch<AuthActions>) =>
+  (onSuccess: (response: any) => void) => {
     dispatch({
       type: Types.REGISTER_LOADING,
     });
@@ -33,6 +34,7 @@ export default ({
           type: Types.REGISTER_SUCCESS,
           payload: res.data,
         });
+        onSuccess(res.data);
       })
       .catch(err => {
         dispatch({

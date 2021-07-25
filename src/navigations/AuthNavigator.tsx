@@ -4,8 +4,13 @@ import {LOGIN, REGISTER} from '../constants/routeNames';
 import {Login} from '../screens/Login';
 import {SignUp} from '../screens/Register';
 
+export type AuthNavigatorStackParamList = {
+  [LOGIN]: any;
+  [REGISTER]: undefined;
+};
+
 function AuthNavigator() {
-  const AuthStack = createStackNavigator();
+  const AuthStack = createStackNavigator<AuthNavigatorStackParamList>();
   return (
     <AuthStack.Navigator
       screenOptions={{

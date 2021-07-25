@@ -17,11 +17,13 @@ type LoginComponentProps = {
   errors: userSignInFormValues;
   onChange: ({name, value}: {name: string; value: string}) => void;
   onDismiss: () => void;
+  justSignedUp: boolean;
 } & Pick<authType, 'error' | 'loading'>;
 
 const LoginComponent = ({
   onSubmit,
   form,
+  justSignedUp,
   errors,
   onChange,
   loading,
@@ -39,6 +41,13 @@ const LoginComponent = ({
       <View>
         <Text style={styles.title}>Welcome to RNContacts</Text>
         <Text style={styles.subTitle}>Please login here</Text>
+        {justSignedUp && (
+          <Message
+            message="You have successfully signed up for an account"
+            success
+            onDismiss={() => {}}
+          />
+        )}
         {error?.error && (
           <Message onDismiss={onDismiss} message={error?.error} />
         )}

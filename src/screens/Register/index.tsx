@@ -45,14 +45,12 @@ const SignUp = () => {
       Object.values(errors).every(item => !item) &&
       Object.values(form).every(item => item && item?.trim().length > 0)
     ) {
-      register(form)(dispatch);
+      register(form)(dispatch)(response => {
+        console.log('trigger');
+        navigate(LOGIN, {data: response});
+      });
     }
   };
-  useEffect(() => {
-    if (authState.data) {
-      navigate(LOGIN);
-    }
-  }, [authState.data]);
 
   useFocusEffect(
     useCallback(() => {

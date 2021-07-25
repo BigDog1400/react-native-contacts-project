@@ -10,7 +10,6 @@ import {Contacts} from '../screens/Contacts';
 import {ContactDetails} from '../screens/ContactDetails';
 import {CreateContact} from '../screens/CreateContact';
 import {Settings} from '../screens/Settings';
-import {Text} from 'react-native';
 
 export type HomeNavigatorStackParamList = {
   [CONTACT_LIST]: undefined;
